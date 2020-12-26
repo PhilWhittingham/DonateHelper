@@ -22,7 +22,7 @@ var collection *mongo.Collection
 var ctx = context.TODO()
 
 func init() {
-    clientOptions := options.Client().ApplyURI("mongodb+srv://donate-user:rUOn3tGW!x6qMRM#@cluster0.qsawd.mongodb.net/")
+    clientOptions := options.Client().ApplyURI("connect string")
     client, err := mongo.Connect(ctx, clientOptions)
     if err != nil {
         log.Fatal(err)
