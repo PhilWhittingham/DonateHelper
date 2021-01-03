@@ -5,15 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"strings"
 
-	"github.com/labstack/echo/v4"
 	"github.com/urfave/cli/v2"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
+	"github.com/PhilWhittingham/DonateHelper/api"
 	"github.com/PhilWhittingham/DonateHelper/db"
 	"github.com/PhilWhittingham/DonateHelper/types"
 )
@@ -87,22 +86,7 @@ func main() {
 				Aliases: []string{"r"},
 				Usage:   "start the rest api",
 				Action: func(c *cli.Context) error {
-					e := echo.New()
-					e.GET("/", func(c echo.Context) error {
-						return c.String(http.StatusOK, "Hello, World!")
-					})
-					e.GET("/all", func(c echo.Context) error {
-						charities, err := db.GetAll()
-						if err != nil {
-							if err == mongo.ErrNoDocuments {
-								fmt.Print("No charities are present")
-								return nil
-							}
-							return err
-						}
-						return c.JSON(http.StatusOK, charities)
-					})
-					e.Logger.Fatal(e.Start(":1323"))
+					api.Initialise()
 					return nil
 				},
 			},
